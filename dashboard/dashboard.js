@@ -15,6 +15,10 @@ angular.module('dashboard').config(function($stateProvider) {
                 footer: {
                     templateUrl: '/dashboard/partial/footer/footer.html'
                 }
+            },
+            data: {
+                isSecure:true
+                //authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor]
             }
         });
 });

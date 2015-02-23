@@ -1,6 +1,11 @@
-angular.module('gatm', ['ui.bootstrap', 'security', 'login', 'signup', 'dashboard']);
+angular.module('gatm', ['ui.bootstrap', 'LocalStorageModule', 'security', 'login', 'signup', 'dashboard']);
 
-angular.module('gatm').config(function($routeProvider, $locationProvider, $urlRouterProvider) {
+angular.module('gatm').config(function($routeProvider,
+                                       $locationProvider,
+                                       $urlRouterProvider,
+                                       localStorageServiceProvider) {
+    //setting prefix for storage.
+    localStorageServiceProvider.setPrefix('tm');
 
     /* Add New Routes Above */
     //$routeProvider.otherwise({redirectTo:'/home'});
@@ -14,19 +19,52 @@ angular.module('gatm').config(function($routeProvider, $locationProvider, $urlRo
 })
 .controller('ApplicationController', function ($scope,
                                                USER_ROLES,
-                                               AuthService) {
-    $scope.currentUser = null;
-    $scope.userRoles = USER_ROLES;
-    $scope.isAuthorized = AuthService.isAuthorized;
+                                               AuthService,
+                                               AUTH_EVENTS,
+                                               $state) {
+        $scope.currentUser = null;
+        $scope.userRoles = USER_ROLES;
+        $scope.isAuthorized = AuthService.isAuthorized;
 
-    $scope.setCurrentUser = function (user) {
-        console.log("user->" + user);
-        $scope.currentUser = user;
-    };
-});
+        $scope.setCurrentUser = function (user) {
+            $scope.currentUser = user;
+        };
+
+        //change state to login incase of authorisation declined.
+        $scope.$on(AUTH_EVENTS.notAuthenticated, function (event, data) {
+            $state.go("login")
+        });
+
+        $scope.$on(AUTH_EVENTS.notAuthorized, function (event, data) {
+            $state.go("login")
+        });
+
+    });
 
 
-angular.module('gatm').run(function($rootScope) {
+angular.module('gatm').run(function($rootScope, AuthService, AUTH_EVENTS, $state, SessionService) {
+    $rootScope.$on('$stateChangeStart', function (event, next) {
+        var _isSecure = next.data.isSecure;
+
+        if(_isSecure) {
+            if (!AuthService.isAuthenticated()) {
+                event.preventDefault();
+                $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
+            }
+        }
+
+        var promise = AuthService.requestCurrentUser();
+        if (promise) {
+
+            promise.then(function (res) {
+                SessionService.create(res.data.access_token, res.data.username, res.data.roles);
+                $state.transitionTo('dashboard');
+            }, function(result) {
+                //AuthService.clearUpSession();
+                //$state.transitionTo('login');
+            });
+        }
+    });
 
     $rootScope.safeApply = function(fn) {
         var phase = $rootScope.$$phase;
