@@ -8,6 +8,7 @@
 @import "security/security.less";
 @import "login/login.less";
 @import "signup/signup.less";
+@import "dashboard/dashboard.less";
 /* Add Component LESS Above */
 
 /* Required for Angular UI Bootstrap */
@@ -24,3 +25,10 @@
 //		.translate(0,0);
 //	}
 //}
+.form-group .help-block {
+    display: none;
+}
+
+.form-group.has-error .help-block {
+    display: block;
+}

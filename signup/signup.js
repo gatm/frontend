@@ -6,7 +6,11 @@ angular.module('signup').config(function($stateProvider) {
     $stateProvider
         .state('signup', {
             url: "/signup",
-            templateUrl: "/signup/partial/signup.html"
+            views: {
+                body: {
+                    templateUrl: "/signup/partial/signup.html"
+                }
+            }
         });
 
 });

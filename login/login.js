@@ -7,7 +7,15 @@ angular.module('login').config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         .state('login', {
             url: "/login",
-            templateUrl: "/login/partial/login.html"
+            views: {
+                body: {
+                    templateUrl: "/login/partial/login.html"
+                }
+            },
+            data: {
+                isSecure:false
+                //authorizedRoles: [USER_ROLES.admin, USER_ROLES.editor]
+            }
         });
 });
 
