@@ -10,6 +10,9 @@ angular.module('signup').config(function($stateProvider) {
                 body: {
                     templateUrl: "/signup/partial/signup.html"
                 }
+            },
+            data: {
+                isSecure:false
             }
         });
 

@@ -32,11 +32,11 @@ angular.module('gatm').config(function($routeProvider,
 
         //change state to login incase of authorisation declined.
         $scope.$on(AUTH_EVENTS.notAuthenticated, function (event, data) {
-            $state.go("login")
+            $state.go("login");
         });
 
         $scope.$on(AUTH_EVENTS.notAuthorized, function (event, data) {
-            $state.go("login")
+            $state.go("login");
         });
 
     });
