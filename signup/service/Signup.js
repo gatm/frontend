@@ -12,10 +12,7 @@ angular.module('signup').factory('Signup',function($http) {
                 name: signupData.name,
                 password: signupData.password
             }
-        }).then(function (res) {
-            return signupData;
         });
-
     };
 
 	return Signup;

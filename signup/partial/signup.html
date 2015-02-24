@@ -6,7 +6,14 @@
             <div class="modal-header">
                 <h1 class="text-center">Signup</h1>
             </div>
+
             <div class="modal-body">
+                <!-- Subscribe to error flash messages. -->
+                <div flash-alert="error" active-class="in alert" class="fade">
+                    <strong class="alert-heading">Boo!</strong>
+                    <span class="alert-message">{{flash.message}}</span>
+                </div>
+
                 <form class="form col-md-12 center-block" name="signupForm" id="signupForm" novalidate>
                     <div class="form-group" show-errors='{ showSuccess: true }'>
                         <label class="control-label">Name:</label>
