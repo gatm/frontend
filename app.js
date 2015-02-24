@@ -1,11 +1,24 @@
-angular.module('gatm', ['ui.bootstrap', 'LocalStorageModule', 'security', 'login', 'signup', 'dashboard']);
+angular.module('gatm', ['ui.bootstrap', 'LocalStorageModule', 'security', 'login', 'signup', 'dashboard',
+    'angular-flash.service', 'angular-flash.flash-alert-directive']);
 
 angular.module('gatm').config(function($routeProvider,
                                        $locationProvider,
                                        $urlRouterProvider,
-                                       localStorageServiceProvider) {
+                                       localStorageServiceProvider,
+                                       flashProvider) {
     //setting prefix for storage.
     localStorageServiceProvider.setPrefix('tm');
+
+    // Support bootstrap 3.0 "alert-danger" class with error flash types
+    flashProvider.errorClassnames.push('alert-danger');
+
+    /**
+     * Also have...
+     *
+     * flashProvider.warnClassnames
+     * flashProvider.infoClassnames
+     * flashProvider.successClassnames
+     */
 
     /* Add New Routes Above */
     //$routeProvider.otherwise({redirectTo:'/home'});
