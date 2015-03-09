@@ -45,6 +45,7 @@
   <script src="directives/showErrors.js"></script>
   <script src="security/service/AuthInterceptor.js"></script>
   <script src="signup/service/Signup.js"></script>
+  <script src="dashboard/partial/add-time-slice/add-time-slice.js"></script>
   <!-- Add New Component JS Above -->
 
 
@@ -52,13 +53,7 @@
   <!--<div id="content" class="container" ui-view></div>-->
 
   <div ui-view="header"></div>
-  <div>
-      <div id="content" class="container">
-          <div class="row">
-              <div ui-view="body" autoscroll="true"></div>
-          </div>
-      </div>
-  </div>
+  <div ui-view="body" autoscroll="true"></div>
   <div ui-view="footer"></div>
 
 </body>
